@@ -40,7 +40,8 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required'
+            'title' => 'required',
+            'date' => 'required'
         ]);
         Event::create($request->all());
         return Redirect::route('events.index')->with('succes', 'Votre évènement a bien été crée');
@@ -79,6 +80,7 @@ class EventController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'date' => 'required'
         ]);
         $event = Event::where('id', $request->id)->first();
         $event->update($request->all());
@@ -96,5 +98,10 @@ class EventController extends Controller
         $event = Event::where('id', $request->id)->first();
         $event->delete();
         return Redirect::route('events.index')->with('success', 'évènement Supprimé');
+    }
+    public function filter(Request $request)
+    {
+        $events = Event::filterDate($request->all())->get();
+        return Inertia::render('Events/Index', ['events' => $events]);
     }
 }

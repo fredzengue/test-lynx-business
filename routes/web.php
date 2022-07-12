@@ -22,6 +22,7 @@ Route::get('/events', 'App\Http\Controllers\EventController@index')->name('event
 Route::post('/event', 'App\Http\Controllers\EventController@store');
 Route::patch('/event/{id}', 'App\Http\Controllers\EventController@update');
 Route::post('/event/delete/{id}', 'App\Http\Controllers\EventController@destroy');
+Route::post('/events/filter', 'App\Http\Controllers\EventController@filter');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
